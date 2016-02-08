@@ -7,6 +7,7 @@ Type objective_function<Type>::operator() ()
   PARAMETER(mu);
   PARAMETER(logSigma);
   
+  
   Type f;
   std::cout << "f " << f << std::endl;
   f = -sum(dnorm(x,mu,exp(logSigma), true));
