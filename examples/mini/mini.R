@@ -5,7 +5,6 @@ parameters <- list(mu=0,logSigma=0)
 
 require(TMB)
 # compile('mini.cpp') # ,'-fno-gnu-unique -O0 -Wall')
-compile('mini.cpp') #,'-fno-gnu-unique -O0 -Wall')
 ## This with these compiler options reduces "optimization" and makes it compile faster
 compile('mini.cpp' ,' -O0 -Wall')
 dyn.load(dynlib('mini'))
