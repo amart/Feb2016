@@ -11,10 +11,12 @@ Type objective_function<Type>::operator() ()
   PARAMETER(logK);
   PARAMETER(logQ);
   PARAMETER(logSigma);
+
   Type r = exp(logR);
   Type k = exp(logK);
   Type q = exp(logQ);
   Type sigma = exp(logSigma);
+
   vector<Type> B(n);
   vector<Type> Ihat(n);
   Type f;
