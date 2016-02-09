@@ -29,7 +29,7 @@ Type objective_function<Type>::operator() ()
   REPORT(alpha);
   REPORT(beta);
   REPORT(sigma);
-  REPORT(Rhat);
+  ADREPORT(Rhat);
 
   return neglogL;
 }

@@ -31,3 +31,6 @@ solve(model$he())
 
 cov2cor(solve(model$he()))
 
+summary(rep)
+summary(rep,select="all")
+
