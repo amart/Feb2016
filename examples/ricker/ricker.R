@@ -1,6 +1,6 @@
 setwd("~/work/training/20160208 UW/TMB-Feb2016/examples/ricker")
 data <- read.table("ricker.dat", header=TRUE)
-parameters <- list(logalpha=log(5), logbeta=log(0.002), logsigma=0)
+parameters <- list(logalpha=log(2), logbeta=log(0.0004), logsigma=0)
 
 require(TMB)
 compile("ricker.cpp"," -O0 -Wall")
@@ -18,6 +18,7 @@ rep <- sdreport(model)
 print(best)
 print(rep)
 
+fit
 best
 rep
 
@@ -33,4 +34,7 @@ cov2cor(solve(model$he()))
 
 summary(rep)
 summary(rep,select="all")
+
+plot(data$S,data$R,type="p")
+points(data$S,rep$value,pch=19)
 
