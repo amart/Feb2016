@@ -3,20 +3,20 @@
 template<class Type>
 Type objective_function<Type>::operator() ()
 {
-  DATA_INTEGER(minAge);         
-  DATA_INTEGER(maxAge);         
-  DATA_INTEGER(minYear);        
-  DATA_INTEGER(maxYear);        
-  DATA_ARRAY(catchNo);        
+  DATA_INTEGER(minAge);
+  DATA_INTEGER(maxAge);
+  DATA_INTEGER(minYear);
+  DATA_INTEGER(maxYear);
+  DATA_ARRAY(catchNo);
   DATA_ARRAY(stockMeanWeight);
-  DATA_ARRAY(propMature);     
-  DATA_ARRAY(M);              
-  DATA_INTEGER(minAgeS);        
-  DATA_INTEGER(maxAgeS);        
-  DATA_INTEGER(minYearS);       
-  DATA_INTEGER(maxYearS);       
-  DATA_SCALAR(surveyTime);     
-  DATA_ARRAY(Q1);  
+  DATA_ARRAY(propMature);
+  DATA_ARRAY(M);
+  DATA_INTEGER(minAgeS);
+  DATA_INTEGER(maxAgeS);
+  DATA_INTEGER(minYearS);
+  DATA_INTEGER(maxYearS);
+  DATA_SCALAR(surveyTime);
+  DATA_ARRAY(Q1);
 
   PARAMETER_VECTOR(logN1Y);
   PARAMETER_VECTOR(logN1A);
@@ -24,25 +24,27 @@ Type objective_function<Type>::operator() ()
   PARAMETER_VECTOR(logFA);
   PARAMETER_VECTOR(logVarLogCatch);
   PARAMETER_VECTOR(logQ);
-  PARAMETER(logVarLogSurvey);  
+  PARAMETER(logVarLogSurvey);
 
   int na=maxAge-minAge+1;
   int ny=maxYear-minYear+1;
   int nas=maxAgeS-minAgeS+1;
   int nys=maxYearS-minYearS+1;
 
-  // setup F
+  // set up F-at-age (F * sel)
   matrix<Type> F(na,ny);
   for(int a=0; a<na; ++a){
     for(int y=0; y<ny; ++y){
       F(a,y)=exp(logFY(y))*exp(logFA(a));
     }
   }
-  // setup logN
+
+  // set up logN
   matrix<Type> logN(na,ny);
   for(int a=0; a<na; ++a){
     logN(a,0)=logN1Y(a);
-  } 
+  }
+
   for(int y=1; y<ny; ++y){
     logN(0,y)=logN1A(y-1);
     for(int a=1; a<na; ++a){
@@ -52,6 +54,7 @@ Type objective_function<Type>::operator() ()
       }
     }
   }
+
   matrix<Type> predLogC(na,ny);
   for(int a=0; a<na; ++a){
     for(int y=0; y<ny; ++y){
@@ -59,13 +62,14 @@ Type objective_function<Type>::operator() ()
     }
   }
 
-  Type ans=0; 
+  // objective function
+  Type ans=0;
   for(int a=0; a<na; ++a){
     for(int y=0; y<ny; ++y){
       if(a==0){
-        ans+= -dnorm(log(catchNo(a,y)),predLogC(a,y),exp(Type(0.5)*logVarLogCatch(0)),true);
+        ans+= -dnorm(log(catchNo(a,y)),predLogC(a,y),exp(Type(0.5)*logVarLogCatch(0)),true);    // variance for young fish is (probably) higher
       }else{
-        ans+= -dnorm(log(catchNo(a,y)),predLogC(a,y),exp(Type(0.5)*logVarLogCatch(1)),true);
+        ans+= -dnorm(log(catchNo(a,y)),predLogC(a,y),exp(Type(0.5)*logVarLogCatch(1)),true);    // than the variance for older fish
       }
     }
   }

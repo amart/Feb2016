@@ -1,3 +1,4 @@
+setwd("~/work/training/20160208 UW/TMB-Feb2016/examples/catage")
 load("fsa.RData") # gets "dat"
 
 library(TMB)
@@ -5,12 +6,12 @@ compile("fsa2.cpp")
 dyn.load(dynlib("fsa2"))
 
 parameters <- list(
-  logN1Y=rep(0,nrow(dat$catchNo)),
-  logN1A=rep(0,ncol(dat$catchNo)-1),
-  logFY=rep(0,ncol(dat$catchNo)),
-  logFA=rep(0,nrow(dat$catchNo)),
-  logVarLogCatch=c(0,0), 
-  logQ=rep(0,nrow(dat$Q1)),
+  logN1Y=rep(0,nrow(dat$catchNo)),   # numbers-at-age in the first year
+  logN1A=rep(0,ncol(dat$catchNo)-1), # recruits in each year
+  logFY=rep(0,ncol(dat$catchNo)),    # annual F
+  logFA=rep(0,nrow(dat$catchNo)),    # F at each age -> selectivity
+  logVarLogCatch=c(0,0),             # ???
+  logQ=rep(0,nrow(dat$Q1)),          # survey selectivity
   logVarLogSurvey=0
 )
 obj <- MakeADFun(dat,parameters,DLL="fsa2", map=list(logFA=factor(c(1:4,NA,NA,NA))), silent=TRUE)
