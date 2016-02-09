@@ -1,5 +1,5 @@
-setwd("F:\\")
-TheD <- read.csv("Ex1.Dat")
+setwd("~/work/training/20160208 UW/TMB-Feb2016/examples/andre")
+TheD <- read.csv("ex1.dat")
 print(TheD)
 
 data <- list()
@@ -42,8 +42,8 @@ cat(AIC1,AIC2,AIC3,"\n")
 par(mfrow=c(2,2))
 for (Isex in 1:2)
  {
-  plot(TheD[data$Sex==(Isex-1),2],TheD[data$Sex==(Isex-1),3],pch=16,xlab="Age",ylab="Length") 
+  plot(TheD[data$Sex==(Isex-1),2],TheD[data$Sex==(Isex-1),3],pch=16,xlab="Age",ylab="Length")
   lines(1:50,obj3$report()$LenPred[Isex,])
- }  
+ }
 
 
