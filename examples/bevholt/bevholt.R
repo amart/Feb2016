@@ -9,7 +9,8 @@ dyn.load(dynlib("bevholt"))
 ################################################################################
 
 model <- MakeADFun(data, parameters, DLL="bevholt")
-fit <- nlminb(model$par, model$fn, model$gr)
+
+for (i in 1:3) fit <- nlminb(model$env$last.par.best, model$fn, model$gr)
 
 best <- model$env$last.par.best
 rep <- sdreport(model)
@@ -21,3 +22,6 @@ best
 rep
 
 exp(best)
+
+model$he()
+
