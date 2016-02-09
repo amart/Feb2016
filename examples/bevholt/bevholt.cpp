@@ -8,19 +8,24 @@ Type objective_function<Type>::operator() ()
   DATA_VECTOR(S);
   int n = R.size();
 
-  PARAMETER(Rmax);
-  PARAMETER(S50);
+  PARAMETER(logalpha);
+  PARAMETER(logbeta);
   PARAMETER(logSigma);
+
+  Type alpha = exp(logalpha);
+  Type beta  = exp(logbeta);
 
   vector<Type> Rhat(n);
 
   Type neglogL = 0.0;
 
-  Rhat = Rmax * S / (S + S50);
+  Rhat = S / (alpha + (beta * S));
   neglogL = -sum(dnorm(R, Rhat, exp(logSigma), true));
 
   // JIM THORSON JUST ROCK'N TMB
-  std::cout << Rmax <<"  " << S50 << " " << logSigma <<"\n ";
+  std::cout << alpha <<"  " << beta << " " << logSigma <<"\n ";
+  REPORT(alpha);
+  REPORT(beta);
 
   return neglogL;
 }
