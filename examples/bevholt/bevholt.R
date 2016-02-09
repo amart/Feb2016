@@ -31,6 +31,7 @@ rep <- sdreport(model)
 
 print(best)
 print(rep)
+summary(rep)
 
 <<<<<<< HEAD
 best
