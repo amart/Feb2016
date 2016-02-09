@@ -25,3 +25,9 @@ exp(best)
 
 model$he()
 
+jointrep <- sdreport(model, getJointPrecision=TRUE)
+
+solve(model$he())
+
+cov2cor(solve(model$he()))
+
