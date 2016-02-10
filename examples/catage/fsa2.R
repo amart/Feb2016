@@ -14,6 +14,8 @@ parameters <- list(
   logQ=rep(0,nrow(dat$Q1)),          # survey selectivity
   logVarLogSurvey=0
 )
+
+# fixes sel for ages 5, 6, and 7 to be the same value (log value is 0, so actual value is 1)
 obj <- MakeADFun(dat,parameters,DLL="fsa2", map=list(logFA=factor(c(1:4,NA,NA,NA))), silent=TRUE)
 
 opt <- nlminb(obj$par, obj$fn, obj$gr, control=list(iter.max=1000,eval.max=1000))
@@ -26,5 +28,22 @@ lines(ssb[,1]-2*ssb[,2], type="l", lwd=1, col="red")
 lines(ssb[,1]+2*ssb[,2], type="l", lwd=1, col="red")
 
 
+best <- obj$env$last.par.best
+
+best
+rep
+
+exp(best)
+
+obj$he()
+
+jointrep <- sdreport(obj, getJointPrecision=TRUE)
+
+solve(obj$he())
+
+cov2cor(solve(obj$he()))
+
+summary(rep)
+summary(rep,select="all")
 
 

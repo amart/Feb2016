@@ -92,6 +92,10 @@ Type objective_function<Type>::operator() ()
     }
   }
 
+  REPORT(logN1A);
+  REPORT(logFA);
+  REPORT(logQ);
   ADREPORT(ssb);
+
   return ans;
 }
